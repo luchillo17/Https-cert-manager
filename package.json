@@ -1,6 +1,6 @@
 {
   "name": "https-test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "gulp-help": "^1.6.1",
     "gulp-sftp": "^0.1.5",
     "lodash": "^4.13.1",
+    "run-sequence": "^1.2.2",
     "yargs": "^4.7.1"
   }
 }

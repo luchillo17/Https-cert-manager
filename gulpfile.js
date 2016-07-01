@@ -4,6 +4,7 @@ var all = require('gulp-all');
 var sftp = require('gulp-sftp');
 var _ = require('lodash/collection');
 var defaults = require('./certbot.defaults.json');
+var runSequence = require('run-sequence');
 
 
 var ssl_args_config = {
@@ -90,9 +91,12 @@ var ssl_task_help = {
 
 
 gulp.task('install', 'Installs the cerbot-auto deps.', () => {
-	simpleProcess('wget', ['wget https://dl.eff.org/certbot-auto'], 'Certbot download')
+	return simpleProcess('wget', ['-N', 'https://dl.eff.org/certbot-auto'], 'Certbot download')
 	.then((success) => {
 		return simpleProcess('chmod', ['a+x', 'certbot-auto'], 'Permission certbot')
+	})
+	.catch((err) => {
+		console.log('Error: ', err)
 	})
 }, {
 	aliases: ['i']
@@ -101,20 +105,21 @@ gulp.task('install', 'Installs the cerbot-auto deps.', () => {
 
 gulp.task('get-ssl-cert', 'Obtain a certificate from Let\'s encrypt.', () => {
 	var args = argv.parse(process.argv)
-	console.log(args)
+
 	var domains = _.flatMap(args.d, (domain) => {
 		return ['-d', domain]
 	})
 
 	var opts = [
 		'certonly',
+		'-n',
 		'-c', args.c,
 		'-m', args.m,
 		...domains
 	]
 
 	if (args.t) opts.push('--staging')
-	simpleProcess('./certbot-auto', opts, 'SSL certificate')
+	return simpleProcess('./certbot-auto', opts, 'SSL certificate')
 }, { options: ssl_task_help })
 
 
@@ -137,8 +142,9 @@ gulp.task('paste-ssl-remote', 'Copy your certificates from current directory to 
 gulp.task(
 	'update-ssl-cert',
 	'Update the current available certs and copy them to all certified servers.',
-	['get-ssl-cert', 'paste-ssl-remote'],
-	() => {},
+	(cb) => {
+		runSequence('get-ssl-cert', 'paste-ssl-remote', cb)
+	},
 	{ options: ssl_task_help }
 )
 
