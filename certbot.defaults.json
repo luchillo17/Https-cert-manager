@@ -1,0 +1,28 @@
+{
+  "conf": "./certbot.conf.ini",
+	"contact_email": "jhon.doe@gmail.com",
+	"domains": [
+		"www.example.com"
+	],
+  "servers": [
+    {
+      "host": "www.server2upload.com",
+      "remotePaths": "default",
+      "auth": "testAuth"
+    }, {
+      "host": "www.server2upload.any.com",
+      "remotePaths": "secPath",
+      "auth": "testAuth2"
+    }
+  ],
+  "paths": {
+    "default": [
+      "/root/app/web",
+      "/root/app/rest"
+    ],
+    "secPath": [
+      "/root/any_client/web",
+      "/root/any_client/rest"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "testAuth": "user:pass",
+  "testAuth2": {
+    "user": "username1",
+    "pass": "password1"
+  }
+}

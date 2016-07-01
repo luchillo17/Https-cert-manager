@@ -1,0 +1,21 @@
+{
+  "name": "https-test",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Carlos Esteban Lopez Jaramillo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-all": "^1.1.0",
+    "gulp-help": "^1.6.1",
+    "gulp-sftp": "^0.1.5",
+    "lodash": "^4.13.1",
+    "yargs": "^4.7.1"
+  }
+}
